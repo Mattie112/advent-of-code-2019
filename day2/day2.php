@@ -10,15 +10,16 @@ $program[2] = 02;
 
 echo "Part 1: " . calculate($program) . PHP_EOL;
 
+// Now find the noun, simply iterate till we have a value that is to big
 $value = calculate($program);
 while ($value < $part2_expected) {
     $program[1]++;
     $value = calculate($program);
 }
-// Now we are to far go back an noun
+// Now subtract one: this is our noun
 $program[1]--;
 
-// Now find the verb
+// Now find the verb by doing the same, but now we look for an exact match
 $value = calculate($program);
 while ($value !== $part2_expected) {
     $program[2]++;
