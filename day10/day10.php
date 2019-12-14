@@ -95,7 +95,7 @@ while (true) {
         $closest = $astroids[$key];
         unset($astroid_list[$degrees][$key]);
         $kill_count++;
-        echo $kill_count . " - " . implode(",", $closest) . PHP_EOL;
+        echo $kill_count . " - " . $degrees . " - " . implode(",", $closest) . PHP_EOL;
         if ($kill_count === 200) {
             echo "Part 2: " . ($closest[1] + $closest[0]) . PHP_EOL;
             var_dump($closest);
@@ -118,7 +118,7 @@ function getVisibleAstroidsForPosition($map, $best_loc_y, $best_loc_x)
                 continue;
             }
             $degrees = getDegrees($best_loc_y - $row_id, $best_loc_x - $cell_id);
-            $astroid_list[$degrees][abs($best_loc_y - $row_id) + abs($best_loc_x - $cell_id)] = [$cell_id, $row_id];
+            $astroid_list[(string)$degrees][abs($best_loc_y - $row_id) + abs($best_loc_x - $cell_id)] = [$cell_id, $row_id];
         }
     }
     return $astroid_list;
@@ -132,7 +132,8 @@ function getDegrees($dX, $dY)
 //    $degrees = ($dX < 0) ? rad2deg(atan2($dX, $dY)) + 360 : rad2deg(atan2($dX, $dY));
     $degrees = rad2deg(atan2($dX, $dY));
     // Our atan does not think 0 = NORTH so convert it so that 0 = NORTH = UP
-    $degrees = ($degrees - 90) % 360;
+//    $degrees = ($degrees - 90) % 360;
+    $degrees -= 90.0;
     // All negative values will get +360 degrees so that our clockwise layer can just go through the array from low to high
     if ($degrees < 0) {
         $degrees += 360;
