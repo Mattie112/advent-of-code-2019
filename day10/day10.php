@@ -2,7 +2,6 @@
 /** https://adventofcode.com/2019/day/10 */
 
 $map = [];
-
 if ($file = fopen(__DIR__ . "/day10-input.txt", "rb")) {
     while (!feof($file)) {
         $line = trim(fgets($file));
@@ -11,45 +10,6 @@ if ($file = fopen(__DIR__ . "/day10-input.txt", "rb")) {
         }
         $map[] = str_split($line);
     }
-}
-
-$map = [];
-$input = ".#..##.###...#######
-##.############..##.
-.#.######.########.#
-.###.#######.####.#.
-#####.##.#.##.###.##
-..#####..#.#########
-####################
-#.####....###.#.#.##
-##.#################
-#####.##.###..####..
-..######..##.#######
-####.##.####...##..#
-.#####..#.######.###
-##...#.##########...
-#.##########.#######
-.####.#.###.###.#.##
-....##.##.###..#####
-.#.#.###########.###
-#.#.#.#####.####.###
-###.##.####.##.#..##";
-
-//$input = ".#..#
-//.....
-//#####
-//....#
-//...##";
-
-//$input = ".#....#####...#..
-//##...##.#####..##
-//##...#...#.#####.
-//..#.....X...###..
-//..#.#.....#....##";
-
-$input = explode("\n", $input);
-foreach ($input as $line) {
-    $map[] = str_split($line);
 }
 $astroid_map = [];
 $most_astroids = 0;
@@ -97,17 +57,12 @@ while (true) {
         $kill_count++;
         echo $kill_count . " - " . $degrees . " - " . implode(",", $closest) . PHP_EOL;
         if ($kill_count === 200) {
-            echo "Part 2: " . ($closest[1] + $closest[0]) . PHP_EOL;
-            var_dump($closest);
+            $part2 = ($closest[0] * 100) + $closest[1];
+            echo "Part 2: " . $part2 . PHP_EOL;
             break 2;
         }
     }
-    // Everything we can see is killed, check for more astroids
-//    $astroid_list = getVisibleAstroidsForPosition($map, $best_loc_y, $best_loc_x);
 }
-
-
-$a = 1;
 
 function getVisibleAstroidsForPosition($map, $best_loc_y, $best_loc_x)
 {
@@ -129,10 +84,7 @@ function getDegrees($dX, $dY)
     if ($dX === 0 && $dY === 0) {
         return 0;
     }
-//    $degrees = ($dX < 0) ? rad2deg(atan2($dX, $dY)) + 360 : rad2deg(atan2($dX, $dY));
     $degrees = rad2deg(atan2($dX, $dY));
-    // Our atan does not think 0 = NORTH so convert it so that 0 = NORTH = UP
-//    $degrees = ($degrees - 90) % 360;
     $degrees -= 90.0;
     // All negative values will get +360 degrees so that our clockwise layer can just go through the array from low to high
     if ($degrees < 0) {
